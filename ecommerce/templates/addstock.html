@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="text-center mt-3">
+    <h3 class="text center text-light"> Add Product Stock</h3></div>
+<form method="POST" enctype="multipart/form-data">
+        {% csrf_token %} <!--it is a security feature of django -->
+        <div class="mb-3">
+  <label class="form-label">Stock</label>
+  <input type="text" class="form-control" name="s" value="{{pro.stock}}" placeholder="Enter stock">
+        </div>
+
+        <div class="mb-3">
+            <input type="submit" class="btn btn-dark text-light px-4">
+        </div>
+    </form>
+{% endblock %}

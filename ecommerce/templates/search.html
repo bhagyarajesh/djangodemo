@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+{% if pro == None %}
+<div class="container mt-5 p-3 bg-dark text-light" style="margin-botton:100px;color:white">
+    <h3 class="text center text-dark"> Search Products</h3>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+            <input type="text" class="form-control" name="q">
+            <input type="submit" class="btn btn-secondary">
+        </div>
+    </form>
+</div>
+{% else %}
+<div class="row special-list">
+    {% for i in pro %}
+    <div class="col-lg-3 col-md-6 special-grid best-seller">
+        <div class="products-single fix">
+            <div class="box-img-hover">
+                <div class="type-lb">
+                    <p class="sale">Sale</p>
+                </div>
+                <img src="{{i.image.url}}" class="img-fluid" alt="Image">
+                <div class="mask-icon">
+                    <a class="cart" href="{% url 'shop:detail' i.id %}">Details</a>
+                </div>
+            </div>
+            <div class="why-text">
+                <h4>{{i.name}}</h4>
+                <h5>{{i.price}}</h5>
+            </div>
+        </div>
+    </div>
+
+
+    {% empty %}
+    <h2 class="text-center">No Results found</h2>
+    {% endfor %}
+</div>
+{% endif %}
+</div>
+{% endblock %}

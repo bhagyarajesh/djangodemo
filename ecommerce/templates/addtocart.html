@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container mt-5 p-3 bg-primary">
+    <h3 class="text-center">Cart</h3>
+    <div class="cart-box-main">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-7">
+                    <div class="table-main table-responsive">
+                        <table class="table text-dark border border-2 border-light ">
+                                <tr class="bg-light">
+                                    <th>Images</th>
+                                    <th>Product Name</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+                                    <th>Remove</th>
+
+                                </tr>
+                            <tbody>
+                            {% for i in cart %}
+                            <tr>
+                                <td><img class="img-fluid" src="{{i.product.image.url}}" height="100px" width="100px" alt="" /></td>
+                                <td>{{i.product.name}}</td>
+                                <td>{{i.product.price}}</td>
+                                <td>{{i.quantity}}</td>
+                                <td>{{i.subtotal}}</td>
+                                <td>
+                                    {% if i.product.stock > 0 %}
+                                       <a href="{% url 'cart:addtocart' i.product.id %} "><i class="fa fa-plus-circle text-danger" aria-hidden="true"></i></a>
+                                       <a href="{% url 'cart:cart_remove' i.product.id %}"><i class="fa fa-minus-circle text-danger" aria-hidden="true"></i></a>
+                                       <a href="{% url 'cart:cart_fullremove' i.product.id %}"><i class="fa fa-trash text-danger" aria-hidden="true"></i></a>
+                                    {% else %}
+                                       <a href="{% url 'cart:cart_remove' i.product.id %}"><i class="fa fa-minus-circle text-danger" aria-hidden="true"></i></a>
+                                       <a href="{% url 'cart:cart_fullremove' i.product.id %}"><i class="fa fa-trash text-danger" aria-hidden="true"></i></a>
+                                    {% endif %}
+
+                                </td>
+                            </tr>
+                            {% endfor %}
+                                </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="table-main table-responsive">
+                        <table class="table text-dark border border-2 border-light ">
+                                <tr>
+                                    <th>CheckOut</th>
+                                </tr>
+                            <tr>
+                                <td>Total:{{total}}</td>
+                            </tr>
+
+                        </table>
+                        <div class="d-flex justify-content-between">
+                                <a href="{% url 'cart:orderform' %}" class="btn-danger">Place Order</a>
+                                <a href="{% url 'shop:categories' %}" class="btn-danger">Continue Shopping</a>
+                            </div>
+                    </div>
+                </div>
+{% endblock %}

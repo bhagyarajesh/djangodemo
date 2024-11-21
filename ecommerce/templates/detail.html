@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!--<div class="container">-->
+<!--    <h1>Product Details</h1>-->
+    <div class="about-box-main mt-2">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-1">
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="banner-frame mt-2"><img  height="300px" width="60%" src="{{pro.image.url}}"  alt=""/>
+                            </div>
+                        </div>
+                            <div class="col-lg-7">
+                                <h2 class="noo-sh-title-top"><span>{{pro.name}}</span></h2>
+                                <p style="text-align:justify;height:2;">{{pro.desc}}</p>
+                                <p>{{pro.price}}</p>
+                                <p>{{pro.stock}}</p>
+                                {% if user.is_superuser %}  <!-- if the user is admin -->
+
+                                      {% if pro.stock > 0 %}
+                                          <p>Product in Stock</p>
+                                          <a class="btn hvr-hover" href="{% url 'shop:addstock' pro.id %}">Add Stock</a>
+                                      {% else %}
+                                           <p>Product Out of Stock</p>
+                                           <a class="btn hvr-hover" href="{% url 'shop:addstock' pro.id %}">Add Stock</a>
+                                      {% endif %}
+
+                                {% else %}  <!-- if the user is normal user -->
+                                      {% if pro.stock > 0 %}
+                                            <a class="btn hvr-hover" href="{% url 'cart:addtocart' pro.id %}">Add to Cart</a>
+                                     {% else %}
+                                              <p>Product Out of Stock</p>
+                                     {% endif %}
+                                {% endif %}
+
+
+
+
+                            </div>
+</div>
+                    </div>
+                </div>
+
+{% endblock %}
